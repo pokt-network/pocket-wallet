@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from "./node_modules/react";
 
 import FooterContent from './Footer';
 import Wrapper from '.././Wrapper';
-import HalfColumn from './HalfColumn';
+import HalfColumn from './half-column';
 import tw from '../../utils/images/twitter.png';
 import github from '../../utils/images/github.png';
 import discord from '../../utils/images/discord.png';

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, NavLink } from 'react-router-dom';
 
-import Wrapper from '.././Wrapper';
-import Menu from "./Menu";
-import MobileButton from "./MobileButton";
-import Logo from "./Logo";
-import StyledUl from "./Ul";
-import StyledLi from "./Li";
-import HeaderContainer from "./Header";
+import Wrapper from '.././wrapper';
+import Menu from "./menu";
+import MobileButton from "./mobile-button";
+import Logo from "./logo";
+import StyledUl from "./ul";
+import StyledLi from "./li";
+import HeaderContainer from "./header";
 import logo from '../../utils/images/logo-white.png';
 import arrow from '../../utils/images/right-arrow.png';
 

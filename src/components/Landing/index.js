@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-import Wrapper from '../../components/Wrapper';
-import LandingContent from './LandingContent';
+import Wrapper from '../wrapper';
+import LandingContent from './landing-content';
 import logoPW from '../../utils/images/50x45.png';
-import Description from './Description';
-import Title from './../Public/Title/Title';
-import Button from './../Public/Button/Button';
+import Description from './description';
+import Title from './../public/title/title';
+import Button from './../public/button/button';
 
 class Landing extends Component {
   render () {

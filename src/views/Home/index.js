@@ -1,6 +1,6 @@
-import React from 'react';
-import HomeContent from './Home';
-import Landing from '../../components/Landing';
+import React from './node_modules/react';
+import HomeContent from './home';
+import Landing from '../../components/landing';
 
 function Home (){
     return (

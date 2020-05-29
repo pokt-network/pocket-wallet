@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Wrapper from '../../components/Wrapper';
-import CreatePrivateKeyContent from './CreatePrivateKey';
-import Input from '../../components/Public/Input/Input';
-import Button from '../../components/Public/Button/Button';
+import Wrapper from '../../components/wrapper';
+import CreatePrivateKeyContent from './create-private-key';
+import Input from '../../components/public/input/input';
+import Button from '../../components/public/button/button';
 import altertT from '../../utils/images/alert-triangle.png';
 import reload from '../../utils/images/reload.png'; 
 import increase from '../../utils/images/increase.png';

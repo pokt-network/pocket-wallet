@@ -131,6 +131,7 @@ const SendContent = styled.section`
         margin-top: 35px;
         display: inline-block;
         padding: 9px 60px;
+        cursor: pointer;
         ${maxPhone(css`
           width: calc(100% - 120px);
           margin-left: 0;

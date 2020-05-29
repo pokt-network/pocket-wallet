@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import Wrapper from '../../components/Wrapper';
+import React, {Component} from './node_modules/react';
+import Wrapper from '../../components/wrapper';
 import CreateContent from './Create';
-import Title from '../../components/Public/Title/Title';
-import Input from '../../components/Public/Input/Input';
-import Button from '../../components/Public/Button/Button';
+import Title from '../../components/public/Title/Title';
+import Input from '../../components/public/input/input';
+import Button from '../../components/public/button/button';
 import altertR from '../../utils/images/alert-circle-red.png';
 import altertT from '../../utils/images/alert-triangle.png';
 import { DataSource } from "../../datasource"

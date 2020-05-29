@@ -1,9 +1,9 @@
 import React from 'react';
-import Wrapper from '../../components/Wrapper';
-import ImportContent from './Import';
-import Title from '../../components/Public/Title/Title';
-import Input from '../../components/Public/Input/Input';
-import Button from '../../components/Public/Button/Button';
+import Wrapper from '../../components/wrapper';
+import ImportContent from './import';
+import Title from '../../components/public/title/title';
+import Input from '../../components/public/input/input';
+import Button from '../../components/public/button/button';
 import altertR from '../../utils/images/alert-circle-red.png';
 
 function Send (){

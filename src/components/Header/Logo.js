@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { tablet } from "../../utils/media";
 import { colors } from '../../utils/colors';
 
-import StyledLink from "./Link";
+import StyledLink from "./link";
 
 const Brand = styled(StyledLink)`
   margin-right: auto;
@@ -12,7 +12,6 @@ const Brand = styled(StyledLink)`
   ${tablet(css`
     padding: 0 14px;
   `)};
-
   img {
     max-width: 100px;
     ${tablet(css`

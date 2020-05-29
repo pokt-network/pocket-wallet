@@ -27,7 +27,6 @@ const HalfColumn = styled.div`
             margin-top: 55px;
         }
     `)};
-
 `;
 
 export default HalfColumn;
