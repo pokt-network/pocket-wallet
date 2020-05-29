@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Wrapper from '../../components/Wrapper';
 import CreateContent from './Create';
 import Title from '../../components/Public/Title/Title';
@@ -6,9 +6,43 @@ import Input from '../../components/Public/Input/Input';
 import Button from '../../components/Public/Button/Button';
 import altertR from '../../utils/images/alert-circle-red.png';
 import altertT from '../../utils/images/alert-triangle.png';
+import { DataSource } from "../../datasource"
 
-function Send (){
-    return (
+class Create extends Component {
+    constructor(props) {
+        super(props)
+        // Set up locals
+        this.dataSource = new DataSource(undefined, [new URL("http://localhost:8081")])
+        // Bind functions
+        this.handleCreateAccount = this.handleCreateAccount.bind(this)
+    }
+    // Create account function
+    handleCreateAccount = async () => {
+        // Retrieve the passphrase value
+        const passphrase = document.getElementById('passp').value
+        // Verify the passphrase length
+        if (passphrase.length > 1) {
+            const account = await this.dataSource.createAccount(passphrase)
+            const accountObj = {
+                addressHex: account.addressHex,
+                publicKeyHex: account.publicKey.toString("hex"),
+                encryptedPrivateKeyHex: account.encryptedPrivateKeyHex
+            }
+            // Set current account and push to createprivatekey view
+            this.props.history.push({
+                pathname: '/createprivatekey',
+                data: accountObj
+              })
+            
+            // Go to create private key
+            // window.location = `/createprivatekey`
+        }else{
+            alert("passphrase is too short")
+        }
+    }
+    // Render
+    render () {
+        return (
         <CreateContent>
             <Wrapper className="wide-block-wr">
                 <Title>CREATE a pocket account</Title>
@@ -18,11 +52,11 @@ function Send (){
                     <form className="pass-form">
                         <div className="cont-input">
                             <Input type="password" name="passphrase" id="passp" placeholder="•••••••••••••••••" />
-                            <span class="error"> <img src={altertR} alt="alert" />The password does not fit the requirements</span>
+                            <span className="error"> <img src={altertR} alt="alert" />The password does not fit the requirements</span>
                         </div>
                         <div className="btn-subm">
                             <Button href="http://example.com">Download</Button>
-                            <Button href="http://example.com" dark>Create</Button>
+                            <Button onClick={this.handleCreateAccount} dark>Create</Button>
                         </div>
                     </form>
                     <a href="http://example.com" className="account">Already have an account? Access my Pocket account</a>
@@ -45,5 +79,5 @@ function Send (){
         </CreateContent>
     );
 }
-
-export default Send;
+}
+export default Create;
