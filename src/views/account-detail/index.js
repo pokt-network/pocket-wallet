@@ -355,7 +355,7 @@ class AccountLatest extends Component {
             // Move to the account detail
             this.props.history.push({
                 pathname: "/transaction-detail",
-                data: {txHash}
+                data: txHash
             });
         };
     }

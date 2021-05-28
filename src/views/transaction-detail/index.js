@@ -80,32 +80,7 @@ class TransactionDetail extends Component {
 
     async getTx(txHash) {
         try {
-          const txResponse = await dataSource
-            .getTx(txHash.toLowerCase())
-            .then(
-              (response) => {
-
-              return ({
-                transaction: {
-                  txResult: {
-                    ...response.tx_result,
-                    events: response.tx_result.events === null ? null : response.tx_result.events.map(
-                      (e) => ({
-                        ...e,
-                        attributes: e.attributes
-                          .map(
-                            (kv) => ({
-                              key: Buffer.from(kv.key, "base64").toString(),
-                              value: Buffer.from(kv.value, "base64").toString(),
-                            })
-                          )
-                      })
-                    )
-                  },
-                }
-              })
-              }
-            );
+          const txResponse = await dataSource.getTx(txHash.toLowerCase());
 
             if (txResponse === undefined) {
                 console.log("Couldn't retrieve the transaction using the provided tx hash");
@@ -113,63 +88,39 @@ class TransactionDetail extends Component {
             }
 
             // Update the UI with the retrieved tx
-            const events = txResponse.transaction.txResult.events;
-            const status = txResponse.transaction.txResult.log === "" ? true : JSON.parse(txResponse.transaction.txResult.log)[0].success;
-
-            let senderAddress = "";
-            let recipientAdress = "";
-            let sentAmount = 0;
-
-            if (events.length >= 2) {
-
-                // Retrieve the recipient address
-                const recipientAttributes = events[1].attributes
-                const recipientObj = recipientAttributes.find(e => e.key === "recipient")
-                if (recipientObj !== undefined) {
-                    recipientAdress = recipientObj.value
-                }
-
-                // Retrieve the sender address
-                const senderAttributes = events[2].attributes
-                const senderObj = senderAttributes.find(e => e.key === "sender")
-                if (senderObj !== undefined) {
-                    senderAddress = senderObj.value
-                }
-
-                // Retrieve the amount sent
-                const amountObj = recipientAttributes.find(e => e.key === "amount")
-                if (amountObj !== undefined) {
-                    sentAmount = amountObj.value.replace("upokt", "")
-                    sentAmount = Number(sentAmount)
-                }
-                // Save the tx information into the state
-                this.setState({
-                    tx: {
-                        sentAmount: sentAmount,
-                        hash: txResponse.transaction.hash,
-                        fee: Number(Config.TX_FEE) / 1000000,
-                        type: "TokenTransfer",
-                        fromAddress: senderAddress,
-                        toAddress: recipientAdress,
-                        status: status === true ? "Success" : "Failed",
-                        sentStatus: "Sent"
-                    }
-                });
-
-                // Cach the tx information
-                PocketService.saveTxInCache(
-                    senderAddress,
-                    recipientAdress,
-                    sentAmount,
-                    txResponse.transaction.hash,
-                    Number(Config.TX_FEE) / 1000000,
-                    status === true ? "Success" : "Failed",
-                    "Sent"
-                )
-
-                this.updateTxInformation();
+            const txSummary = {
+               from: txResponse.stdTx.msg.value ? txResponse.stdTx.msg.value.from_address : txResponse.stdTx.msg.from_address,
+               to: txResponse.stdTx.msg.value ? txResponse.stdTx.msg.value.to_address : txResponse.stdTx.msg.to_address,
+               amount: txResponse.stdTx.msg.value ? txResponse.stdTx.msg.value.amount: txResponse.stdTx.msg.amount,
+               status: txResponse.tx_result.code === 0 ? "Success" : "Failure",
+               hash: txResponse.hash,
             }
 
+            this.setState({
+                tx: {
+                    sentAmount: txSummary.amount,
+                    hash: txSummary.hash,
+                    fee: Number(Config.TX_FEE) / 1000000,
+                    type: "TokenTransfer",
+                    fromAddress: txSummary.from,
+                    toAddress: txSummary.to,
+                    status: txSummary.status,
+                    sentStatus: "Sent"
+                }
+            });
+
+            // Cach the tx information
+            PocketService.saveTxInCache(
+                txSummary.from,
+                txSummary.to,
+                txSummary.amount,
+                txSummary.hash,
+                Number(Config.TX_FEE) / 1000000,
+                txSummary.status,
+                "Sent"
+            )
+
+            this.updateTxInformation();
         } catch (error) {
             console.log(error)
             console.log("Failed to retrieve the transaction information.")
